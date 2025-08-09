@@ -1,0 +1,49 @@
+Metadata-Version: 2.4
+Name: optiboard
+Version: 0.1.0
+Summary: Lay out and visualize optics breadboards with beam paths
+Home-page: https://github.com/yourname/optiboard
+Author: Your Name
+Author-email: you@example.com
+License: MIT
+Keywords: optics,breadboard,optomechanics,visualization
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Topic :: Scientific/Engineering :: Visualization
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+Requires-Dist: numpy>=1.23
+Requires-Dist: matplotlib>=3.6
+Requires-Dist: shapely>=2.0
+Dynamic: author
+Dynamic: author-email
+Dynamic: classifier
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: home-page
+Dynamic: keywords
+Dynamic: license
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary
+
+# optiboard
+
+Lay out and visualize optics breadboards (metric or imperial) with simple components and beam paths.
+
+## Features (v0)
+
+- Board generator (25 mm or 1″ pitch), hole snapping.
+- Components: `PostHolder`, `Post`, `KinematicMount` (footprint placeholders).
+- Beam polylines and Gaussian beam paths with \( w(z) \).
+- CLI: load a scene JSON and render to PNG/SVG.
+
+## Quickstart
+
+```bash
+# dev install
+pip install -e .
+
+# render an example
+optiboard examples/scene_min.json --out layout.svg
