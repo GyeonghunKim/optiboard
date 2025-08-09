@@ -6,11 +6,72 @@ import matplotlib.pyplot as plt
 
 
 class Pattern(Enum):
+    """Enumeration of available hole patterns for breadboards.
+
+    Attributes
+    ----------
+    imperial_1in : str
+        Imperial pattern with 1-inch spacing between holes.
+    metric_25mm : str
+        Metric pattern with 25mm spacing between holes.
+
+    Examples
+    --------
+    >>> pattern = Pattern.imperial_1in
+    >>> pattern.value
+    'imperial_1in'
+    """
+
     imperial_1in = "imperial_1in"
     metric_25mm = "metric_25mm"
 
 
 class Breadboard:
+    """A breadboard for optical experiments with a regular pattern of mounting holes.
+
+    Parameters
+    ----------
+    width : float
+        Width of the breadboard in meters.
+    height : float
+        Height of the breadboard in meters.
+    pattern : Pattern, optional
+        The hole pattern type. Default is Pattern.imperial_1in.
+
+    Attributes
+    ----------
+    width : float
+        Width of the breadboard in meters.
+    height : float
+        Height of the breadboard in meters.
+    pattern : Pattern
+        The hole pattern type.
+    hole_diam : float
+        Diameter of mounting holes in meters.
+    margin : float
+        Margin from board edge to first holes in meters.
+
+    Raises
+    ------
+    ValueError
+        If an invalid pattern is specified.
+
+    Examples
+    --------
+    >>> from optiboard.utils.units import Units
+    >>> board = Breadboard(10*Units.inch, 8*Units.inch)
+    >>> board.width == 10*Units.inch
+    True
+    >>> board.pattern == Pattern.imperial_1in
+    True
+
+    >>> # Create a metric breadboard
+    >>> board_metric = Breadboard(0.3, 0.2, Pattern.metric_25mm)
+    Traceback (most recent call last):
+        ...
+    ValueError: Invalid pattern: Pattern.metric_25mm
+    """
+
     def __init__(
         self,
         width: float,
@@ -27,6 +88,31 @@ class Breadboard:
             raise ValueError(f"Invalid pattern: {self.pattern}")
 
     def draw(self, fig: plt.Figure, ax: plt.Axes):
+        """Draw the breadboard on a matplotlib figure.
+
+        Draws the breadboard boundary and hole pattern on the provided axes.
+        The breadboard is drawn as a black rectangle with gray circular holes
+        arranged in a grid pattern.
+
+        Parameters
+        ----------
+        fig : plt.Figure
+            The matplotlib figure to draw on.
+        ax : plt.Axes
+            The matplotlib axes to draw on.
+
+        Examples
+        --------
+        >>> import matplotlib.pyplot as plt
+        >>> from optiboard.utils.units import Units
+        >>> board = Breadboard(4*Units.inch, 3*Units.inch)
+        >>> fig, ax = plt.subplots()
+        >>> board.draw(fig, ax)
+        >>> ax.get_xlim()[1] == 4*Units.inch
+        True
+        >>> ax.get_ylim()[1] == 3*Units.inch
+        True
+        """
         # Draw the outer boundary of the breadboard
         rect = plt.Rectangle(
             (0, 0),
